@@ -1,0 +1,73 @@
+﻿<!-- Tạo mới Dialogs/SendReportDialog.xaml -->
+<Window x:Class="MotorcycleEmissionUI.Dialogs.SendReportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gửi Báo Cáo" Height="400" Width="500"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="Gửi Báo Cáo Cho Cơ Quan Chức Năng" 
+                   FontSize="18" FontWeight="Bold" Margin="0,0,0,15" />
+        
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Kỳ báo cáo:" 
+                       VerticalAlignment="Center" Margin="0,5" />
+            <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ReportPeriodComboBox" 
+                      Padding="8" Margin="0,5">
+                <ComboBoxItem Content="Tuần" />
+                <ComboBoxItem Content="Tháng" IsSelected="True" />
+                <ComboBoxItem Content="Quý" />
+                <ComboBoxItem Content="Năm" />
+            </ComboBox>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Cơ quan nhận:" 
+                       VerticalAlignment="Center" Margin="0,5" />
+            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="AuthorityComboBox" 
+                      Padding="8" Margin="0,5">
+                <ComboBoxItem Content="Sở Giao thông Vận tải" IsSelected="True" />
+                <ComboBoxItem Content="Cục Đăng kiểm Việt Nam" />
+                <ComboBoxItem Content="Sở Tài nguyên và Môi trường" />
+                <ComboBoxItem Content="UBND Tỉnh/Thành phố" />
+            </ComboBox>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Ghi chú:" 
+                       VerticalAlignment="Top" Margin="0,5" />
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="NotesTextBox" 
+                     Height="80" TextWrapping="Wrap" AcceptsReturn="True" 
+                     VerticalScrollBarVisibility="Auto" Margin="0,5" />
+        </Grid>
+        
+        <GroupBox Grid.Row="2" Header="Xem Trước Báo Cáo">
+            <TextBlock x:Name="ReportPreviewText" 
+                       TextWrapping="Wrap" Margin="10" 
+                       Text="Báo cáo sẽ bao gồm tất cả dữ liệu đã hiển thị trong bảng và biểu đồ. Báo cáo sẽ được định dạng theo mẫu chuẩn và gửi dưới dạng file PDF đính kèm." />
+        </GroupBox>
+        
+        <StackPanel Grid.Row="3" Orientation="Horizontal" 
+                    HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="CancelButton" Content="Hủy" 
+                    Width="100" Padding="0,8" Margin="0,0,10,0"
+                    Click="CancelButton_Click" />
+            <Button x:Name="SendButton" Content="Gửi Báo Cáo" 
+                    Width="120" Padding="0,8"
+                    Background="#2E75B6" Foreground="White"
+                    Click="SendButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

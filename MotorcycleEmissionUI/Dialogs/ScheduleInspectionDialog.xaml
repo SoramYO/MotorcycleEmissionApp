@@ -1,0 +1,43 @@
+<Window x:Class="MotorcycleEmissionUI.Dialogs.ScheduleInspectionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MotorcycleEmissionUI.Dialogs"
+        mc:Ignorable="d"
+        Title="Schedule Inspection" Height="350" Width="500"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="Schedule Emission Inspection" FontSize="18" FontWeight="Bold" Margin="0,0,0,15" />
+        
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Vehicle" Margin="0,5,0,5" />
+            <TextBlock x:Name="VehicleInfoTextBlock" Padding="8" Margin="0,0,0,15" 
+                       Background="#F5F5F5" />
+            
+            <TextBlock Text="Inspection Station" Margin="0,5,0,5" />
+            <ComboBox x:Name="StationComboBox" Padding="8" Margin="0,0,0,15" 
+                      DisplayMemberPath="Name" SelectedValuePath="StationID" />
+            
+            <TextBlock Text="Inspector" Margin="0,5,0,5" />
+            <ComboBox x:Name="InspectorComboBox" Padding="8" Margin="0,0,0,15" 
+                      DisplayMemberPath="FullName" SelectedValuePath="UserID" />
+            
+            <TextBlock Text="Preferred Date" Margin="0,5,0,5" />
+            <DatePicker x:Name="InspectionDatePicker" Padding="8" Margin="0,0,0,10" />
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="CancelButton" Content="Cancel" Width="100" Margin="0,0,10,0" 
+                    Click="CancelButton_Click" />
+            <Button x:Name="ScheduleButton" Content="Schedule" Width="100" Background="#2E75B6" 
+                    Foreground="White" FontWeight="Bold" Click="ScheduleButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window> 

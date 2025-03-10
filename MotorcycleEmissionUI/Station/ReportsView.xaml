@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="MotorcycleEmissionUI.Station.ReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MotorcycleEmissionUI.Station"
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề -->
+        <TextBlock Grid.Row="0" Text="Báo Cáo Kiểm Định" 
+                   FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <!-- Phần điều khiển -->
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,15,0">
+                <TextBlock Text="Từ ngày:"/>
+                <DatePicker x:Name="StartDatePicker" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,0,15,0">
+                <TextBlock Text="Đến ngày:"/>
+                <DatePicker x:Name="EndDatePicker" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,15,0">
+                <TextBlock Text="Khu vực:"/>
+                <ComboBox x:Name="RegionComboBox" Width="150">
+                    <ComboBoxItem Content="Miền Bắc"/>
+                    <ComboBoxItem Content="Miền Trung"/>
+                    <ComboBoxItem Content="Miền Nam"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="4" Orientation="Horizontal">
+                <Button x:Name="GenerateReportButton" 
+                        Content="Tạo Báo Cáo" 
+                        Padding="15,8" Margin="0,0,10,0"
+                        Click="GenerateReportButton_Click"/>
+                <Button x:Name="GenerateRegionStatsButton" 
+                        Content="Thống Kê Khu Vực" 
+                        Padding="15,8"
+                        Click="GenerateRegionStats_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Phần nội dung báo cáo -->
+        <TabControl Grid.Row="2" Margin="0,0,0,15">
+            <TabItem Header="Dữ Liệu Chi Tiết">
+                <DataGrid x:Name="ReportDataGrid" 
+                         AutoGenerateColumns="False" 
+                         IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ngày" 
+                                          Binding="{Binding InspectionDate, StringFormat=dd/MM/yyyy}"
+                                          Width="100"/>
+                        <DataGridTextColumn Header="Biển Số" 
+                                          Binding="{Binding PlateNumber}"
+                                          Width="100"/>
+                        <DataGridTextColumn Header="Chủ Xe" 
+                                          Binding="{Binding OwnerName}"
+                                          Width="150"/>
+                        <DataGridTextColumn Header="CO (ppm)" 
+                                          Binding="{Binding CO}"
+                                          Width="100"/>
+                        <DataGridTextColumn Header="HC (ppm)" 
+                                          Binding="{Binding HC}"
+                                          Width="100"/>
+                        <DataGridTextColumn Header="NOx (ppm)" 
+                                          Binding="{Binding NOx}"
+                                          Width="100"/>
+                        <DataGridTextColumn Header="Kết Quả" 
+                                          Binding="{Binding Result}"
+                                          Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Biểu Đồ">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Row="0" Grid.Column="0" Header="Kết Quả Kiểm Định" Margin="5">
+                        <Canvas x:Name="ResultsChart"/>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="0" Grid.Column="1" Header="Số Lượng Kiểm Định Theo Ngày" Margin="5">
+                        <Canvas x:Name="DailyChart"/>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="1" Grid.Column="0" Header="Tỷ Lệ Tuân Thủ" Margin="5">
+                        <Canvas x:Name="ComplianceChart"/>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="1" Grid.Column="1" Header="Xu Hướng Phát Thải" Margin="5">
+                        <Canvas x:Name="EmissionTrendChart"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <!-- Nút gửi báo cáo -->
+        <Button Grid.Row="3" x:Name="SendReportButton" 
+                Content="Gửi Báo Cáo Cho Cơ Quan Chức Năng" 
+                Padding="15,8" HorizontalAlignment="Right"
+                Background="#2E75B6" Foreground="White"
+                Click="SendReportButton_Click"/>
+    </Grid>
+</UserControl>
