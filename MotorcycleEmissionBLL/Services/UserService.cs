@@ -59,8 +59,6 @@ namespace MotorcycleEmissionBLL.Services
 
         public void RegisterUser(User user)
         {
-            // Hash the password before storing
-            user.Password = (user.Password);
 			_userRepository.Add(user);
         }
 

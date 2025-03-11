@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MotorcycleEmissionBLL.Services;
 using MotorcycleEmissionDAL.Models;
 
 namespace MotorcycleEmissionUI.Dialogs
@@ -20,6 +21,7 @@ namespace MotorcycleEmissionUI.Dialogs
 	/// </summary>
 	public partial class EditVehicleDialog : Window
 	{
+		private readonly IVehicleService _vehicleService;
 		public Vehicle Vehicle { get; set; }
 		private readonly int _ownerID;
 		private readonly int _vehicleId;
@@ -28,6 +30,7 @@ namespace MotorcycleEmissionUI.Dialogs
 			InitializeComponent();
 			_ownerID = ownerID;
 			_vehicleId = vehicleId;
+			_vehicleService = new VehicleService();
 		}
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -65,6 +68,15 @@ namespace MotorcycleEmissionUI.Dialogs
 		{
 			DialogResult = false;
 			Close();
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			PlateNumberTextBox.Text = Vehicle.PlateNumber;
+			BrandTextBox.Text = Vehicle.Brand;
+			ModelTextBox.Text = Vehicle.Model;
+			YearTextBox.Text = Vehicle.ManufactureYear.ToString();
+			EngineNumberTextBox.Text = Vehicle.EngineNumber;
 		}
 	}
 }

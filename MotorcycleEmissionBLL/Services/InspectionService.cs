@@ -136,8 +136,10 @@ namespace MotorcycleEmissionBLL.Services
 		{
 			try
 			{
-				// Lấy lịch sử kiểm định từ Unit of Work
 				return _inspectionRecords.GetAll()
+					.AsQueryable()
+					.Include(i => i.Inspector)
+					.Include(i => i.Station)
 					.Where(i => i.VehicleId == vehicleId)
 					.OrderByDescending(i => i.InspectionDate)
 					.ToList();
@@ -149,6 +151,7 @@ namespace MotorcycleEmissionBLL.Services
 				return new List<InspectionRecord>();
 			}
 		}
+
 
 		public List<InspectionRecord> GetPendingInspections(int inspectorId)
 		{

@@ -1,3 +1,4 @@
+using MotorcycleEmissionBLL.Services;
 using MotorcycleEmissionDAL.Models;
 using System;
 using System.Windows;
@@ -9,14 +10,16 @@ namespace MotorcycleEmissionUI.Dialogs
     /// </summary>
     public partial class AddVehicleDialog : Window
     {
-        public Vehicle Vehicle { get; private set; }
+        private readonly IVehicleService _vehicleService;
+		public Vehicle Vehicle { get; private set; }
         private readonly int _ownerID;
 
         public AddVehicleDialog(int ownerID)
         {
             InitializeComponent();
             _ownerID = ownerID;
-        }
+			_vehicleService = new VehicleService();
+		}
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -45,8 +48,8 @@ namespace MotorcycleEmissionUI.Dialogs
                 return;
             }
 
-            // Create vehicle object
-            Vehicle = new Vehicle
+			// Create vehicle object
+			Vehicle = new Vehicle
             {
                 OwnerId = _ownerID,
                 PlateNumber = PlateNumberTextBox.Text.Trim(),
@@ -56,7 +59,11 @@ namespace MotorcycleEmissionUI.Dialogs
                 EngineNumber = EngineNumberTextBox.Text.Trim()
             };
 
-            DialogResult = true;
+			// Save vehicle
+			_vehicleService.AddVehicle(Vehicle);
+
+
+			DialogResult = true;
             Close();
         }
     }

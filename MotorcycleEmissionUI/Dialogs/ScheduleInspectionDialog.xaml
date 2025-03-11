@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MotorcycleEmissionUI.Dialogs"
         mc:Ignorable="d"
-        Title="Schedule Inspection" Height="350" Width="500"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Title="Schedule Inspection" Height="450" Width="500"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

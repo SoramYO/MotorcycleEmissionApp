@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MotorcycleEmissionUI.Dialogs"
         mc:Ignorable="d"
         Title="Edit Vehicle" Height="550" Width="500"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

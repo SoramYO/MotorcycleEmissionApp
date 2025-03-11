@@ -58,11 +58,11 @@ namespace MotorcycleEmissionUI.VehicleOwner
         
         private void EditVehicle_Click(object sender, RoutedEventArgs e)
         {
-            // Di chuyển code từ MainAppWindow.xaml.cs, phương thức EditVehicle_Click
             if (sender is Button button && button.Tag is int vehicleId)
             {
                 var editVehicleDialog = new EditVehicleDialog(_user.UserId, vehicleId);
-                editVehicleDialog.Owner = Window.GetWindow(this);
+                editVehicleDialog.Vehicle = _vehicleService.GetVehicleById(vehicleId);
+				editVehicleDialog.Owner = Window.GetWindow(this);
                 
                 if (editVehicleDialog.ShowDialog() == true)
                 {
@@ -74,34 +74,35 @@ namespace MotorcycleEmissionUI.VehicleOwner
         
         private void ScheduleInspection_Click(object sender, RoutedEventArgs e)
         {
-            // Di chuyển code từ MainAppWindow.xaml.cs, phương thức ScheduleInspection_Click
-            //if (sender is Button button && button.Tag is int vehicleId)
-            //{
-            //    var scheduleDialog = new ScheduleInspectionDialog(vehicleId);
-            //    scheduleDialog.Owner = Window.GetWindow(this);
-                
-            //    if (scheduleDialog.ShowDialog() == true)
-            //    {
-            //        MessageBox.Show("Đặt lịch kiểm định thành công!", "Thông báo", 
-            //            MessageBoxButton.OK, MessageBoxImage.Information);
-            //    }
-            //}
+
+            if (sender is Button button && button.Tag is int vehicleId)
+            {
+                var scheduleDialog = new ScheduleInspectionDialog();
+                scheduleDialog.vehicle = _vehicleService.GetVehicleById(vehicleId);
+
+				scheduleDialog.Owner = Window.GetWindow(this);
+
+                if (scheduleDialog.ShowDialog() == true)
+                {
+                    MessageBox.Show("Đặt lịch kiểm định thành công!", "Thông báo",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
         
         private void ViewVehicleHistory_Click(object sender, RoutedEventArgs e)
         {
             // Di chuyển code từ MainAppWindow.xaml.cs, phương thức ViewVehicleHistory_Click
-            //if (sender is Button button && button.Tag is int vehicleId)
-            //{
-            //    // Chuyển đến UserControl lịch sử kiểm định và đặt vehicleId đang chọn
-            //    var historyView = App.ServiceProvider.GetRequiredService<InspectionHistoryView>();
-            //    historyView.SetVehicleId(vehicleId);
-                
-            //    // Điều hướng
-            //    var navigationService = App.ServiceProvider.GetRequiredService<Common.NavigationService>();
-            //    var ownerDashboard = Window.GetWindow(this) as OwnerDashboard;
-            //    navigationService.NavigateTo(ownerDashboard.ContentArea, historyView);
-            //}
+            if (sender is Button button && button.Tag is int vehicleId)
+            {
+                // Chuyển đến UserControl lịch sử kiểm định và đặt vehicleId đang chọn
+                var historyView = new InspectionHistoryView();
+                historyView.Vehicle = _vehicleService.GetVehicleById(vehicleId);
+
+				
+                var ownerDashboard = Window.GetWindow(this) as OwnerDashboard;
+                ownerDashboard.ContentArea.Content = historyView;
+			}
         }
     }
 }

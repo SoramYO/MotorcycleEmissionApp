@@ -22,7 +22,7 @@
                   GridLinesVisibility="Horizontal"
                   AlternatingRowBackground="#F5F5F5" RowHeight="35">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã Xe" Binding="{Binding VehicleID}" Width="80" />
+                <DataGridTextColumn Header="Mã Xe" Binding="{Binding VehicleId}" Width="80" />
                 <DataGridTextColumn Header="Biển Số" Binding="{Binding PlateNumber}" Width="120" />
                 <DataGridTextColumn Header="Hãng" Binding="{Binding Brand}" Width="120" />
                 <DataGridTextColumn Header="Kiểu" Binding="{Binding Model}" Width="120" />
@@ -33,11 +33,11 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Sửa" Margin="5,0" Padding="8,3"
-                                        Click="EditVehicle_Click" Tag="{Binding VehicleID}" />
+                                        Click="EditVehicle_Click" Tag="{Binding VehicleId}" />
                                 <Button Content="Đặt Lịch Kiểm Định" Margin="5,0" Padding="8,3"
-                                        Click="ScheduleInspection_Click" Tag="{Binding VehicleID}" />
+                                        Click="ScheduleInspection_Click" Tag="{Binding VehicleId}" />
                                 <Button Content="Xem Lịch Sử" Margin="5,0" Padding="8,3"
-                                        Click="ViewVehicleHistory_Click" Tag="{Binding VehicleID}" />
+                                        Click="ViewVehicleHistory_Click" Tag="{Binding VehicleId}" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

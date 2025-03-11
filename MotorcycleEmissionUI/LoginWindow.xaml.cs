@@ -119,8 +119,8 @@ namespace MotorcycleEmissionUI
 		{
 			// Mở cửa sổ đăng ký
 			var registerWindow = new RegisterWindow();
-			registerWindow.Owner = this;
-			registerWindow.ShowDialog();
+			registerWindow.Show();
+			Close();
 		}
 	}
 }
