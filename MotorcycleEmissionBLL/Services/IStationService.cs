@@ -15,6 +15,7 @@ namespace MotorcycleEmissionBLL.Services
 		bool StationExists(string email);
 
 		// Station location methods
+		List<InspectionStation> GetStations();
 		IEnumerable<string> GetProvincesByRegion(string region);
 		List<InspectionStation> GetStationsByProvince(string province);
 

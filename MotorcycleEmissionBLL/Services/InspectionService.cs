@@ -44,7 +44,8 @@ namespace MotorcycleEmissionBLL.Services
 
 		public IEnumerable<InspectionRecord> GetInspectionsByInspector(int inspectorId)
 		{
-			return _inspectionRecords.GetAll().Where(r => r.InspectorId == inspectorId);
+			return _inspectionRecords.GetAllHasInclude("Vehicle", "Vehicle.Owner")
+				.Where(r => r.InspectorId == inspectorId);
 		}
 
 		public IEnumerable<InspectionRecord> GetInspectionsByResult(string result)
@@ -54,7 +55,10 @@ namespace MotorcycleEmissionBLL.Services
 
 		public IEnumerable<InspectionRecord> GetInspectionsByStation(int stationId)
 		{
-			return _inspectionRecords.GetAll().Where(r => r.StationId == stationId);
+			var inspections = _inspectionRecords.GetAllHasInclude("Vehicle")
+	.Where(ir => ir.StationId == stationId)
+	.ToList();
+			return inspections;
 		}
 
 		public IEnumerable<InspectionRecord> GetInspectionsByVehicle(int vehicleId)
@@ -136,13 +140,17 @@ namespace MotorcycleEmissionBLL.Services
 		{
 			try
 			{
-				return _inspectionRecords.GetAll()
-					.AsQueryable()
-					.Include(i => i.Inspector)
-					.Include(i => i.Station)
+				var inspections = _inspectionRecords.GetAllHasInclude(
+						"Vehicle",                  
+						"Vehicle.Owner",            
+						"Inspector",                
+						"Station",                 
+						"Inspector.InspectionRecords" 
+					)
 					.Where(i => i.VehicleId == vehicleId)
 					.OrderByDescending(i => i.InspectionDate)
 					.ToList();
+				return inspections;
 			}
 			catch (Exception ex)
 			{
@@ -158,7 +166,8 @@ namespace MotorcycleEmissionBLL.Services
 			try
 			{
 				// Lấy danh sách kiểm định đang chờ của một nhân viên kiểm định
-				return _inspectionRecords.GetAll()
+				// Bao gồm thông tin xe và chủ xe
+				return _inspectionRecords.GetAllHasInclude("Vehicle", "Vehicle.Owner")
 					.Where(i => i.InspectorId == inspectorId && i.Result == "Pending")
 					.ToList();
 			}
@@ -167,7 +176,6 @@ namespace MotorcycleEmissionBLL.Services
 				// Ghi log lỗi
 				Console.WriteLine($"Error in GetPendingInspections: {ex.Message}");
 				return new List<InspectionRecord>();
-
 			}
 		}
 
@@ -342,7 +350,7 @@ namespace MotorcycleEmissionBLL.Services
 			}
 		}
 
-		
+
 
 		// Helper method to extract province from an address
 		private string ExtractProvince(string address)

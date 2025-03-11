@@ -1,15 +1,24 @@
-﻿<Window x:Class="MotorcycleEmissionUI.VehicleOwner.NotificationsView"
+﻿<UserControl x:Class="MotorcycleEmissionUI.VehicleOwner.NotificationsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MotorcycleEmissionUI.VehicleOwner"
-        mc:Ignorable="d"
-        Title="NotificationsView" Height="450" Width="800">
+        mc:Ignorable="d">
     <Grid>
-        <ListView x:Name="NotificationsListView">
-            
+        <ListView x:Name="NotificationsListView" Margin="10">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Message}" FontWeight="Bold" FontSize="14" />
+                            <TextBlock Text="{Binding SentDate, StringFormat=dd/MM/yyyy HH:mm}" FontSize="12" Foreground="Gray" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0,0,0">
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        
     </Grid>
-</Window>
+</UserControl>

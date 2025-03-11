@@ -14,5 +14,8 @@ namespace MotorcycleEmissionBLL.Services
         void UpdateVehicle(Vehicle vehicle);
         void DeleteVehicle(int vehicleId);
         bool VehicleExists(string plateNumber);
-    }
+
+        void Detach(Vehicle vehicle);
+
+	}
 } 

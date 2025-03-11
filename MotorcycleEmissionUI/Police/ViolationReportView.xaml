@@ -1,12 +1,232 @@
-﻿<Window x:Class="MotorcycleEmissionUI.Police.ViolationReportView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MotorcycleEmissionUI.Police"
-        mc:Ignorable="d"
-        Title="ViolationReportView" Height="450" Width="800">
-    <Grid>
-        
+﻿<UserControl x:Class="MotorcycleEmissionUI.Police.ViolationReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MotorcycleEmissionUI.Police"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                Text="Xử Lý Vi Phạm Kiểm Định Khí Thải"
+                   FontSize="20"
+                FontWeight="Bold"
+                Margin="0,0,0,15"/>
+
+        <!-- Search Section -->
+        <Border Grid.Row="1"
+                Background="#F6F6F6"
+                BorderBrush="#DDDDDD"
+                BorderThickness="1"
+                CornerRadius="4"
+                Padding="15"
+                Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                        Text="Biển số xe:"
+                        FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                        Margin="0,0,15,0"/>
+
+                <TextBox Grid.Column="1"
+                        x:Name="SearchPlateTextBox"
+                        Margin="0,0,15,0"
+                         Padding="8,6"
+                        FontSize="14"
+                        VerticalContentAlignment="Center"
+                         BorderThickness="1"
+                        BorderBrush="#AAAAAA">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius"
+                                    Value="3"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <Button Grid.Column="2"
+                        x:Name="SearchVehicleButton"
+                        Content="Tra Cứu"
+                        Padding="20,8"
+                        FontWeight="SemiBold"
+                        Background="#2E75B6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="SearchVehicleButton_Click">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius"
+                                    Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Vehicle Information Section -->
+        <GroupBox Grid.Row="2"
+                Header="Thông Tin Phương Tiện"
+                Margin="0,0,0,15"
+                  x:Name="VehicleInfoGroupBox"
+                Visibility="Collapsed">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Biển số xe:"
+                           FontWeight="Bold"
+                        Margin="0,5"/>
+                <TextBlock Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="DetailPlateNumber"
+                           Margin="0,5"/>
+
+                <TextBlock Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Chủ xe:"
+                           FontWeight="Bold"
+                        Margin="0,5"/>
+                <TextBlock Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="DetailOwner"
+                           Margin="0,5"/>
+
+                <TextBlock Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Loại xe:"
+                           FontWeight="Bold"
+                        Margin="0,5"/>
+                <TextBlock Grid.Row="2"
+                        Grid.Column="1"
+                        x:Name="DetailVehicleType"
+                           Margin="0,5"/>
+
+                <TextBlock Grid.Row="3"
+                        Grid.Column="0"
+                        Text="Trạng thái kiểm định:"
+                           FontWeight="Bold"
+                        Margin="0,5"/>
+                <TextBlock Grid.Row="3"
+                        Grid.Column="1"
+                        x:Name="DetailInspectionStatus"
+                           Margin="0,5"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Violation Form -->
+        <GroupBox Grid.Row="3"
+                Header="Chi Tiết Vi Phạm"
+                Margin="0,0,0,15"
+                  x:Name="ViolationGroupBox"
+                Visibility="Collapsed">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Loại vi phạm:"
+                           Margin="0,5,15,5"
+                        VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="ViolationTypeComboBox"
+                          Margin="0,5,0,5"
+                        Padding="8,5">
+                    <ComboBoxItem Content="Không có giấy chứng nhận kiểm định"/>
+                    <ComboBoxItem Content="Giấy chứng nhận kiểm định hết hạn"/>
+                    <ComboBoxItem Content="Vi phạm tiêu chuẩn khí thải"/>
+                    <ComboBoxItem Content="Làm giả giấy chứng nhận kiểm định"/>
+                    <ComboBoxItem Content="Vi phạm khác"/>
+                </ComboBox>
+
+                <TextBlock Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Ngày vi phạm:"
+                           Margin="0,5,15,5"
+                        VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="ViolationDatePicker"
+                            Margin="0,5,0,5"/>
+                <TextBlock Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Mức phạt:"
+                           Margin="0,5,15,5"
+                        VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2"
+                        Grid.Column="1"
+                        x:Name="FineAmountTextBox"
+                         Margin="0,5,0,5"
+                        Padding="8,5"/>
+
+                <TextBlock Grid.Row="3"
+                        Grid.Column="0"
+                        Text="Ghi chú:"
+                           Margin="0,5,15,5"
+                        VerticalAlignment="Top"/>
+                <TextBox Grid.Row="3"
+                        Grid.Column="1"
+                        x:Name="ViolationNotesTextBox"
+                         Margin="0,5,0,5"
+                        Padding="8,5"
+                        TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                        VerticalAlignment="Stretch"
+                        Height="100"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="4"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+            <Button x:Name="ClearButton"
+                    Content="Xóa Form"
+                    Padding="15,8"
+                    Margin="0,0,10,0"
+                    Background="#F0F0F0"
+                    Click="ClearButton_Click"/>
+            <Button x:Name="ReportViolationButton"
+                    Content="Ghi Nhận Vi Phạm"
+                    Padding="15,8"
+                    Background="#2E75B6"
+                    Foreground="White"
+                    Click="ReportViolationButton_Click"
+                    IsEnabled="False"/>
+        </StackPanel>
     </Grid>
-</Window>
+</UserControl>

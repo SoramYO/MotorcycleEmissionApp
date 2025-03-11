@@ -1,12 +1,81 @@
-﻿<Window x:Class="MotorcycleEmissionUI.Inspector.CompletedInspectionsView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MotorcycleEmissionUI.Inspector"
-        mc:Ignorable="d"
-        Title="CompletedInspectionsView" Height="450" Width="800">
-    <Grid>
-        
+﻿<UserControl x:Class="MotorcycleEmissionUI.Inspector.CompletedInspectionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MotorcycleEmissionUI.Inspector"
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Kiểm Định Đã Hoàn Thành" 
+                   FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <!-- Controls -->
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Column="0" Text="Từ ngày:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <DatePicker Grid.Column="1" x:Name="StartDatePicker" Width="150" Margin="0,0,10,0"/>
+            
+            <TextBlock Grid.Column="2" Text="Đến ngày:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <DatePicker Grid.Column="3" x:Name="EndDatePicker" Width="150" Margin="0,0,10,0"/>
+            
+            <Button Grid.Column="5" x:Name="RefreshButton" 
+                    Content="Tìm Kiếm" Padding="15,8"
+                    Background="#2E75B6" Foreground="White"
+                    Click="RefreshButton_Click"/>
+        </Grid>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="2"
+                  x:Name="CompletedInspectionsDataGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  AlternatingRowBackground="#F5F5F5"
+                  RowHeight="35">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã Kiểm Định" 
+                                    Binding="{Binding RecordId}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Biển Số Xe" 
+                                    Binding="{Binding Vehicle.PlateNumber}" 
+                                    Width="120"/>
+                <DataGridTextColumn Header="Loại Xe" 
+                                    Binding="{Binding Vehicle.Brand}" 
+                                    Width="120"/>
+                <DataGridTextColumn Header="Chủ Xe" 
+                                    Binding="{Binding Vehicle.Owner.FullName}" 
+                                    Width="150"/>
+                <DataGridTextColumn Header="Ngày Kiểm Định" 
+                                    Binding="{Binding InspectionDate, StringFormat=dd/MM/yyyy}" 
+                                    Width="120"/>
+                <DataGridTextColumn Header="Kết Quả" 
+                                    Binding="{Binding Result}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="CO2 (ppm)" 
+                                    Binding="{Binding Co2emission}" 
+                                    Width="90"/>
+                <DataGridTextColumn Header="HC (ppm)" 
+                                    Binding="{Binding Hcemission}" 
+                                    Width="90"/>
+                <DataGridTextColumn Header="Ghi Chú" 
+                                    Binding="{Binding Comments}" 
+                                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
-</Window>
+</UserControl>

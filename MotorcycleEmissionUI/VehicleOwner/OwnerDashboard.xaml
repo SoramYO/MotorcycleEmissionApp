@@ -50,17 +50,6 @@
                             HorizontalContentAlignment="Left"
                             Click="MyVehiclesButton_Click" />
                     
-                    <Button x:Name="ScheduleInspectionButton" 
-                            Content="Đặt Lịch Kiểm Định" 
-                            Margin="0,5" Padding="10,8"
-                            HorizontalContentAlignment="Left"
-                            Click="ScheduleInspectionButton_Click" />
-                    
-                    <Button x:Name="InspectionHistoryButton" 
-                            Content="Lịch Sử Kiểm Định" 
-                            Margin="0,5" Padding="10,8"
-                            HorizontalContentAlignment="Left"
-                            Click="InspectionHistoryButton_Click" />
                     
                     <Button x:Name="NotificationsButton" 
                             Content="Thông Báo" 

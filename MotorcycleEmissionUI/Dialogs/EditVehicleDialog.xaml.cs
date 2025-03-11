@@ -36,10 +36,10 @@ namespace MotorcycleEmissionUI.Dialogs
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (string.IsNullOrWhiteSpace(PlateNumberTextBox.Text) ||
-	string.IsNullOrWhiteSpace(BrandTextBox.Text) ||
-	string.IsNullOrWhiteSpace(ModelTextBox.Text) ||
-	string.IsNullOrWhiteSpace(YearTextBox.Text) ||
-	string.IsNullOrWhiteSpace(EngineNumberTextBox.Text))
+				string.IsNullOrWhiteSpace(BrandTextBox.Text) ||
+				string.IsNullOrWhiteSpace(ModelTextBox.Text) ||
+				string.IsNullOrWhiteSpace(YearTextBox.Text) ||
+				string.IsNullOrWhiteSpace(EngineNumberTextBox.Text))
 			{
 				MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
@@ -50,18 +50,24 @@ namespace MotorcycleEmissionUI.Dialogs
 					"Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
-			Vehicle = new Vehicle
+
+			Vehicle.ManufactureYear = year;
+			Vehicle.PlateNumber = PlateNumberTextBox.Text;
+			Vehicle.Brand = BrandTextBox.Text;
+			Vehicle.Model = ModelTextBox.Text;
+			Vehicle.EngineNumber = EngineNumberTextBox.Text;
+
+			// Detach the existing entity if it is being tracked
+			var existingVehicle = _vehicleService.GetVehicleById(Vehicle.VehicleId);
+			if (existingVehicle != null)
 			{
-				VehicleId = _vehicleId,
-				OwnerId = _ownerID,
-				PlateNumber = PlateNumberTextBox.Text.Trim(),
-				Brand = BrandTextBox.Text.Trim(),
-				Model = ModelTextBox.Text.Trim(),
-				ManufactureYear = year,
-				EngineNumber = EngineNumberTextBox.Text.Trim()
-			};
+				_vehicleService.Detach(existingVehicle);
+			}
 
+			_vehicleService.UpdateVehicle(Vehicle);
 
+			DialogResult = true;
+			Close();
 		}
 
 		private void CancelButton_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="MotorcycleEmissionUI.Inspector.InspectionStandardsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MotorcycleEmissionUI.Inspector"
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Tiêu Chuẩn Kiểm Định Khí Thải Xe Máy" 
+                   FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <!-- Introduction -->
+        <TextBlock Grid.Row="1" Margin="0,0,0,15" TextWrapping="Wrap">
+            Tiêu chuẩn kiểm định khí thải xe máy tại Việt Nam theo QCVN 20:2019/BGTVT. 
+            Các giá trị dưới đây là ngưỡng tối đa cho phép.
+        </TextBlock>
+
+        <!-- Standards -->
+        <TabControl Grid.Row="2">
+            <TabItem Header="Xe máy theo năm sản xuất">
+                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" 
+                          AlternatingRowBackground="#F5F5F5">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Loại xe" Width="200" Binding="{Binding VehicleType}"/>
+                        <DataGridTextColumn Header="Năm sản xuất" Width="150" Binding="{Binding ProductionYear}"/>
+                        <DataGridTextColumn Header="CO (% thể tích)" Width="150" Binding="{Binding CO}"/>
+                        <DataGridTextColumn Header="HC (ppm)" Width="150" Binding="{Binding HC}"/>
+                        <DataGridTextColumn Header="Ghi chú" Width="*" Binding="{Binding Notes}"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Items>
+                        <local:EmissionStandard VehicleType="Xe máy 2 kỳ" ProductionYear="Trước năm 1999" CO="4.5" HC="10000" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy 2 kỳ" ProductionYear="1999-2003" CO="4.0" HC="7800" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy 2 kỳ" ProductionYear="Sau năm 2003" CO="3.5" HC="5000" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy 4 kỳ" ProductionYear="Trước năm 1999" CO="4.5" HC="3000" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy 4 kỳ" ProductionYear="1999-2003" CO="3.5" HC="2200" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy 4 kỳ" ProductionYear="Sau năm 2003" CO="3.0" HC="1500" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy điện" ProductionYear="Tất cả" CO="0" HC="0" Notes="Không áp dụng"/>
+                        <local:EmissionStandard VehicleType="Xe máy tiêu chuẩn Euro 3" ProductionYear="Tất cả" CO="2.0" HC="800" Notes=""/>
+                        <local:EmissionStandard VehicleType="Xe máy tiêu chuẩn Euro 4" ProductionYear="Tất cả" CO="1.0" HC="400" Notes=""/>
+                    </DataGrid.Items>
+                </DataGrid>
+            </TabItem>
+            
+            <TabItem Header="Phương pháp đo">
+                <ScrollViewer>
+                    <StackPanel Margin="10">
+                        <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" FontWeight="Bold">
+                            A. Quy trình kiểm định khí thải:
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                            1. Kiểm tra xe máy ở trạng thái chạy không tải (động cơ đã được làm nóng).<LineBreak/>
+                            2. Đặt đầu đo vào ống xả của xe máy.<LineBreak/>
+                            3. Chờ động cơ ổn định ở vòng tua 2500-3000 rpm.<LineBreak/>
+                            4. Tiến hành đo và ghi nhận kết quả.<LineBreak/>
+                            5. Thực hiện đo tối thiểu 3 lần và lấy giá trị trung bình.
+                        </TextBlock>
+                        
+                        <TextBlock TextWrapping="Wrap" Margin="0,10,0,10" FontWeight="Bold">
+                            B. Yêu cầu về thiết bị đo:
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                            1. Thiết bị đo phải được hiệu chuẩn định kỳ 6 tháng/lần.<LineBreak/>
+                            2. Độ chính xác tối thiểu: CO (±0.06%), HC (±12ppm).<LineBreak/>
+                            3. Thời gian đáp ứng của thiết bị không quá 15 giây.
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

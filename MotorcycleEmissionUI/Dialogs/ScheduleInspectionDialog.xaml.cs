@@ -118,8 +118,6 @@ namespace MotorcycleEmissionUI.Dialogs
 			};
 			_inspectionService.ScheduleInspection(InspectionRecord);
 
-			MessageBox.Show("Inspection scheduled successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
 			DialogResult = true;
 			Close();
 		}

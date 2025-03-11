@@ -20,7 +20,7 @@ namespace MotorcycleEmissionUI.VehicleOwner
     /// <summary>
     /// Interaction logic for NotificationsView.xaml
     /// </summary>
-    public partial class NotificationsView : Window
+    public partial class NotificationsView : UserControl
     {
 		private readonly INotificationService _notificationService;
 		private User _user;
@@ -51,68 +51,6 @@ namespace MotorcycleEmissionUI.VehicleOwner
 			{
 				MessageBox.Show($"Lỗi khi tải thông báo: {ex.Message}", "Lỗi",
 					MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-		}
-
-		private void MarkAsRead_Click(object sender, RoutedEventArgs e)
-		{
-			if (sender is Button button && button.Tag is int notificationId)
-			{
-				try
-				{
-					// Đánh dấu thông báo đã đọc
-					var updatedNotification = _notificationService.GetNotificationById(notificationId);
-
-					if (updatedNotification != null && updatedNotification.IsRead == true)
-					{
-						// Tải lại danh sách thông báo
-						LoadNotifications();
-					}
-					else
-					{
-						MessageBox.Show("Không thể đánh dấu thông báo đã đọc. Vui lòng thử lại!", "Lỗi",
-							MessageBoxButton.OK, MessageBoxImage.Error);
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi hệ thống",
-						MessageBoxButton.OK, MessageBoxImage.Error);
-				}
-			}
-		}
-
-		private void DeleteNotification_Click(object sender, RoutedEventArgs e)
-		{
-			if (sender is Button button && button.Tag is int notificationId)
-			{
-				try
-				{
-					// Xác nhận xóa
-					var result = MessageBox.Show("Bạn có chắc muốn xóa thông báo này không?", "Xác nhận",
-						MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-					if (result == MessageBoxResult.Yes)
-					{
-						var deletedNotification = _notificationService.GetNotificationById(notificationId);
-
-						if (deletedNotification == null)
-						{
-							// Tải lại danh sách thông báo
-							LoadNotifications();
-						}
-						else
-						{
-							MessageBox.Show("Không thể xóa thông báo. Vui lòng thử lại!", "Lỗi",
-								MessageBoxButton.OK, MessageBoxImage.Error);
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi hệ thống",
-						MessageBoxButton.OK, MessageBoxImage.Error);
-				}
 			}
 		}
 	}

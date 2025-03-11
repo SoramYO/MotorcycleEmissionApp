@@ -66,8 +66,7 @@
                     Click="CancelButton_Click" />
             <Button x:Name="SendButton" Content="Gửi Báo Cáo" 
                     Width="120" Padding="0,8"
-                    Background="#2E75B6" Foreground="White"
-                    Click="SendButton_Click" />
+                    Background="#2E75B6" Foreground="White" Click="SendButton_Click" />
         </StackPanel>
     </Grid>
 </Window>

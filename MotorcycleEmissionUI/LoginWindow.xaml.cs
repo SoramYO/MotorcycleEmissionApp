@@ -29,8 +29,6 @@ namespace MotorcycleEmissionUI
 	{
 		private readonly IUserService _userService;
 
-		// Sự kiện khi đăng nhập thành công
-		public event EventHandler<User> LoginSuccessful;
 
 		public LoginWindow()
 		{

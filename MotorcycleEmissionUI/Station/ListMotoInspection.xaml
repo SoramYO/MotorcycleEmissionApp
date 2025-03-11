@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="MotorcycleEmissionUI.Station.ListMotoInspection"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MotorcycleEmissionUI.Station"
+        mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Danh Sách Xe Đăng Ký Kiểm Tra" 
+                   FontSize="20" FontWeight="Bold" Margin="0,0,0,15" />
+
+        <!-- Content -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Filter by Station -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                <TextBlock Text="Trung Tâm Kiểm Định:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                <ComboBox x:Name="StationComboBox" Width="200" SelectionChanged="StationComboBox_SelectionChanged" />
+            </StackPanel>
+
+            <!-- DataGrid for displaying vehicles -->
+            <DataGrid Grid.Row="1" x:Name="VehiclesDataGrid" AutoGenerateColumns="False" IsReadOnly="True" 
+                      AlternatingRowBackground="#F5F5F5" RowHeight="35">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Biển Số" Binding="{Binding PlateNumber}" Width="120" />
+                    <DataGridTextColumn Header="Hãng" Binding="{Binding Brand}" Width="120" />
+                    <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="120" />
+                    <DataGridTextColumn Header="Năm SX" Binding="{Binding ManufactureYear}" Width="80" />
+                    <DataGridTextColumn Header="Số Máy" Binding="{Binding EngineNumber}" Width="150" />
+                    <DataGridTextColumn Header="Ngày Kiểm Định" Binding="{Binding InspectionDate, StringFormat=dd/MM/yyyy}" Width="150" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

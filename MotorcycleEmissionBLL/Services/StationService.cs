@@ -130,7 +130,12 @@ namespace MotorcycleEmissionBLL.Services
             
             return passRates;
         }
-        
-        #endregion
-    }
+
+		public List<InspectionStation> GetStations()
+		{
+			return _stationRepository.GetAll().ToList();
+		}
+
+		#endregion
+	}
 }

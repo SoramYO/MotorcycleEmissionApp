@@ -53,21 +53,6 @@ namespace MotorcycleEmissionUI.VehicleOwner
 			ContentArea.Content = myVehiclesView;
 		}
 
-		private void ScheduleInspectionButton_Click(object sender, RoutedEventArgs e)
-		{
-			var scheduleView = new ScheduleInspectionView();
-
-			ContentArea.Content = scheduleView;
-
-		}
-
-		private void InspectionHistoryButton_Click(object sender, RoutedEventArgs e)
-		{
-			var historyView = new InspectionHistoryView();
-
-			ContentArea.Content =  historyView;
-
-		}
 
 		private void NotificationsButton_Click(object sender, RoutedEventArgs e)
 		{

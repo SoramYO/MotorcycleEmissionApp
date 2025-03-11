@@ -32,7 +32,7 @@ namespace MotorcycleEmissionUI.Police
         
         private void VehicleSearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var searchView = new InspectionService();
+            var searchView = new VehicleSearchView();
 			ContentArea.Content =  searchView;
         }
         

@@ -1,4 +1,5 @@
-﻿using MotorcycleEmissionDAL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MotorcycleEmissionDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace MotorcycleEmissionDAL
 	public class GenericRepository<T> where T : class
 	{
 		private readonly MotorcycleEmissionDbContext _context;
-
+		public GenericRepository(MotorcycleEmissionDbContext context = null)
+		{
+			_context = context ?? new();
+		}
 		public GenericRepository()
 		{
 			_context = new();
@@ -50,10 +54,28 @@ namespace MotorcycleEmissionDAL
 			return _context.Set<T>().ToList();
 		}
 
+		//get all has include
+		public List<T> GetAllHasInclude(params string[] includes)
+		{
+			IQueryable<T> query = _context.Set<T>();
+
+			foreach (var include in includes)
+			{
+				query = query.Include(include);
+			}
+
+			return query.ToList();
+		}
+
 		// Get a single entity by ID
 		public T GetById(int id)
 		{
 			return _context.Set<T>().Find(id);
 		}
+		public void Detach(T entity)
+		{
+			_context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+		}
 	}
+
 }

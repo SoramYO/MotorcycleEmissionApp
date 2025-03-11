@@ -8,16 +8,20 @@ namespace MotorcycleEmissionBLL.Services
 {
     public class VehicleService : IVehicleService
     {
+		private readonly MotorcycleEmissionDbContext _context;
 		private readonly GenericRepository<Vehicle> _vehicleRepository;
-        private readonly GenericRepository<InspectionRecord> _inspectionRecordRepository;
+		private readonly GenericRepository<InspectionRecord> _inspectionRecordRepository;
+
 
 		public VehicleService()
         {
-			_vehicleRepository = new GenericRepository<Vehicle>();
-			_inspectionRecordRepository = new GenericRepository<InspectionRecord>();
+			_context = new MotorcycleEmissionDbContext();
+			_vehicleRepository = new GenericRepository<Vehicle>(_context);
+			_inspectionRecordRepository = new GenericRepository<InspectionRecord>(_context);
+
 		}
 
-        public void AddVehicle(Vehicle vehicle)
+		public void AddVehicle(Vehicle vehicle)
         {
             if (VehicleExists(vehicle.PlateNumber))
                 throw new Exception("A vehicle with this plate number already exists");
@@ -42,7 +46,9 @@ namespace MotorcycleEmissionBLL.Services
 
         public Vehicle GetVehicleByPlateNumber(string plateNumber)
         {
-            return _vehicleRepository.GetAll().Find(v => v.PlateNumber == plateNumber);
+            // Include the Owner entity when retrieving the vehicle
+            return _vehicleRepository.GetAllHasInclude("Owner")
+                .FirstOrDefault(v => v.PlateNumber == plateNumber);
         }
 
 		public IEnumerable<Vehicle> GetVehiclesByOwner(int ownerId)
@@ -50,27 +56,37 @@ namespace MotorcycleEmissionBLL.Services
 			return _vehicleRepository.GetAll().Where(v => v.OwnerId == ownerId).ToList();
 		}
 
-        public void UpdateVehicle(Vehicle vehicle)
-        {
-            var existingVehicle = _vehicleRepository.GetById(vehicle.VehicleId);
-            
-            if (existingVehicle == null)
-                throw new Exception("Vehicle not found");
+		public void UpdateVehicle(Vehicle vehicle)
+		{
+			var existingVehicle = _vehicleRepository.GetById(vehicle.VehicleId);
+
+			if (existingVehicle == null)
+				throw new Exception("Vehicle not found");
 
 			// If plate number changed, check if new plate number exists
 			if (existingVehicle.PlateNumber != vehicle.PlateNumber && VehicleExists(vehicle.PlateNumber))
 				throw new Exception("A vehicle with this plate number already exists");
-            _vehicleRepository.Update(vehicle);
 
+			// Update the existing entity properties instead of trying to update the whole entity
+			existingVehicle.PlateNumber = vehicle.PlateNumber;
+			existingVehicle.Brand = vehicle.Brand;
+			existingVehicle.Model = vehicle.Model;
+			existingVehicle.ManufactureYear = vehicle.ManufactureYear;
+			existingVehicle.EngineNumber = vehicle.EngineNumber;
 
+			_vehicleRepository.Update(existingVehicle);
 		}
 
 		public bool VehicleExists(string plateNumber)
 		{
 			return _vehicleRepository.GetAll().Any(v => v.PlateNumber == plateNumber);
 		}
+		public void Detach(Vehicle vehicle)
+		{
+			_vehicleRepository.Detach(vehicle);
+		}
 
-        public bool VerifyVehicleDocuments(int vehicleId, string documentType, string documentNumber)
+		public bool VerifyVehicleDocuments(int vehicleId, string documentType, string documentNumber)
         {
             var vehicle = _vehicleRepository.GetById(vehicleId);
             if (vehicle == null)

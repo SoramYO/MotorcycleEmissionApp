@@ -48,7 +48,7 @@ CREATE TABLE InspectionRecords (
     StationID INT NOT NULL,
     InspectorID INT NOT NULL,
     InspectionDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Result VARCHAR(10) NOT NULL CHECK (Result IN ('Pass', 'Fail')),
+    Result VARCHAR(10) NOT NULL CHECK (Result IN ('Pass', 'Fail', 'Pending')),
     CO2Emission DECIMAL(5,2) NOT NULL,
     HCEmission DECIMAL(5,2) NOT NULL,
     Comments NVARCHAR(MAX),
